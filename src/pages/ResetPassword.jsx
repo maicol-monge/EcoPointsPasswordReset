@@ -16,15 +16,22 @@ function ResetPassword({ token }) {
       try {
         const r = await fetch(`${apiBase}/api/password/validar/${encodeURIComponent(token)}`)
         if (!r.ok) {
+          console.error('Token validation failed:', r.status, r.statusText)
           setValid(false)
           return
         }
         const json = await r.json()
-        setValid(true)
-        setTipo(json.data?.tipo || null)
-        setIdRef(json.data?.id_referencia || null)
+        if (json.success && json.data) {
+          setValid(true)
+          setTipo(json.data.tipo || null)
+          setIdRef(json.data.id_referencia || null)
+          console.log('Token validated successfully:', json.data)
+        } else {
+          console.error('Token validation failed:', json.message)
+          setValid(false)
+        }
       } catch (err) {
-        console.error(err)
+        console.error('Network error during token validation:', err)
         setValid(false)
       }
     }
@@ -48,10 +55,18 @@ function ResetPassword({ token }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password_nueva: password }),
       })
-      if (r.ok) setStatus('done')
-      else setStatus('error')
+      
+      const json = await r.json()
+      
+      if (r.ok && json.success) {
+        console.log('Password reset successful:', json.message)
+        setStatus('done')
+      } else {
+        console.error('Password reset failed:', json.message || 'Unknown error')
+        setStatus('error')
+      }
     } catch (err) {
-      console.error(err)
+      console.error('Network error during password reset:', err)
       setStatus('error')
     }
   }
