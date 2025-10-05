@@ -84,12 +84,16 @@ function ResetPassword({ token }) {
       <div className="card-header">
         <img src={logoUrl} alt="EcoPoints" className="card-logo" />
         <div>
-          <h2>Nueva contraseña</h2>
+          <h2>🔐 Nueva contraseña</h2>
           <div className="user-info">
             <span className="user-type">{tipo}</span>
             {idRef && <span className="user-id">ID: {idRef}</span>}
           </div>
         </div>
+      </div>
+
+      <div className="reset-intro">
+        <p>Por tu seguridad, estableceremos una nueva contraseña para tu cuenta. Asegúrate de usar una contraseña segura que no hayas usado antes.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="form">
@@ -103,22 +107,35 @@ function ResetPassword({ token }) {
               onChange={e => setPassword(e.target.value)} 
               required 
               placeholder="Mínimo 8 caracteres"
+              autoFocus
             />
           </label>
+          <div className="password-requirements">
+            <small className={password.length >= 8 ? 'requirement-met' : 'requirement-pending'}>
+              ✓ Mínimo 8 caracteres
+            </small>
+          </div>
         </div>
         
         <div className="input-group">
           <label htmlFor="confirm">
-            Repetir contraseña
+            Confirmar contraseña
             <input 
               id="confirm"
               type="password" 
               value={confirm} 
               onChange={e => setConfirm(e.target.value)} 
               required 
-              placeholder="Confirma tu nueva contraseña"
+              placeholder="Repite tu nueva contraseña"
             />
           </label>
+          {confirm && (
+            <div className="password-requirements">
+              <small className={password === confirm ? 'requirement-met' : 'requirement-pending'}>
+                {password === confirm ? '✓ Las contraseñas coinciden' : '⚠ Las contraseñas no coinciden'}
+              </small>
+            </div>
+          )}
         </div>
 
         <div className="form-actions">
@@ -126,10 +143,12 @@ function ResetPassword({ token }) {
             {status === 'sending' ? (
               <>
                 <div className="btn-spinner"></div>
-                Actualizando...
+                Guardando nueva contraseña...
               </>
             ) : (
-              'Confirmar nueva contraseña'
+              <>
+                🔒 Guardar nueva contraseña
+              </>
             )}
           </button>
         </div>
@@ -147,12 +166,20 @@ function ResetPassword({ token }) {
       )}
       {status === 'done' && (
         <div className="alert alert-success">
-          <span>✅</span> Contraseña actualizada correctamente. Puedes cerrar esta ventana.
+          <span>✅</span> 
+          <div>
+            <strong>¡Contraseña actualizada!</strong>
+            <p>Tu contraseña ha sido cambiada exitosamente. Ya puedes iniciar sesión en la aplicación con tu nueva contraseña.</p>
+          </div>
         </div>
       )}
       {status === 'error' && (
         <div className="alert alert-error">
-          <span>❌</span> Ocurrió un error al actualizar la contraseña. Intenta nuevamente.
+          <span>❌</span> 
+          <div>
+            <strong>Error al actualizar</strong>
+            <p>No se pudo cambiar la contraseña. Verifica tu conexión e intenta nuevamente, o solicita un nuevo enlace.</p>
+          </div>
         </div>
       )}
     </section>

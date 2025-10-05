@@ -412,3 +412,110 @@ body {
         gap: 12px;
     }
 }
+
+/* No Token Page Styles */
+.no-token-card {
+    text-align: left;
+}
+
+.instructions {
+    margin: 32px 0;
+}
+
+.step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+}
+
+.step-number {
+    background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    margin: 0 0 8px 0;
+    color: var(--accent-1);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.step-content p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.help-section {
+    margin-top: 32px;
+}
+
+.help-box {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border: 1px solid #7dd3fc;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.help-box h4 {
+    margin: 0 0 12px 0;
+    color: #0369a1;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.help-box ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #0c4a6e;
+}
+
+.help-box li {
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Reset Password Page Improvements */
+.reset-intro {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border: 1px solid #86efac;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 20px 0;
+}
+
+.reset-intro p {
+    margin: 0;
+    color: #065f46;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.password-requirements {
+    margin-top: 8px;
+}
+
+.password-requirements small {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.requirement-met {
+    color: #059669;
+}
+
+.requirement-pending {
+    color: var(--muted);
+}

@@ -1,13 +1,14 @@
 import React from 'react'
 import logoUrl from './assets/logo_no_bg.png'
 
-import RequestReset from './pages/RequestReset'
 import ResetPassword from './pages/ResetPassword'
+import NoTokenPage from './pages/NoTokenPage'
 
 
 function App() {
   const params = new URLSearchParams(window.location.search)
   const token = params.get('token')
+  
   return (
     <div className="container">
       <header className="header">
@@ -20,7 +21,7 @@ function App() {
         </div>
       </header>
       <main className="main-content">
-        {!token ? <RequestReset /> : <ResetPassword token={token} />}
+        {token ? <ResetPassword token={token} /> : <NoTokenPage />}
       </main>
       <footer className="footer">
         <p>© 2025 EcoPoints. Todos los derechos reservados.</p>
