@@ -8,10 +8,12 @@ function ResetPassword({ token }) {
   const [confirm, setConfirm] = useState('')
   const [status, setStatus] = useState(null)
 
+  const apiBase = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
+
   useEffect(() => {
     async function validate() {
       try {
-        const r = await fetch(`/api/password/validar/${encodeURIComponent(token)}`)
+        const r = await fetch(`${apiBase}/api/password/validar/${encodeURIComponent(token)}`)
         if (!r.ok) {
           setValid(false)
           return
@@ -40,7 +42,7 @@ function ResetPassword({ token }) {
     }
     setStatus('sending')
     try {
-      const r = await fetch(`/api/password/confirmar/${encodeURIComponent(token)}`, {
+      const r = await fetch(`${apiBase}/api/password/confirmar/${encodeURIComponent(token)}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password_nueva: password }),
@@ -58,9 +60,15 @@ function ResetPassword({ token }) {
 
   return (
     <section className="card">
-      <h2>Restablecer contraseña</h2>
-      <p>Tipo: {tipo} {idRef ? `• id ${idRef}` : ''}</p>
-      <form onSubmit={handleSubmit} className="form">
+      <div style={{display:'flex',alignItems:'center',gap:12}}>
+        <img src="/src/assets/logo_no_bg.png" alt="EcoPoints" style={{height:48}} />
+        <div>
+          <h2 style={{margin:0}}>Restablecer contraseña</h2>
+          <small style={{color:'#6b7280'}}>Tipo: {tipo} {idRef ? `• id ${idRef}` : ''}</small>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="form" style={{marginTop:12}}>
         <label>
           Nueva contraseña
           <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />

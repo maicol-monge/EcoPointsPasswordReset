@@ -5,11 +5,13 @@ function RequestReset() {
   const [tipo, setTipo] = useState('usuario')
   const [status, setStatus] = useState(null)
 
+  const apiBase = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
+
   async function handleSubmit(e) {
     e.preventDefault()
     setStatus('sending')
     try {
-      await fetch('/api/password/solicitar', {
+      await fetch(`${apiBase}/api/password/solicitar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tipo, correo: email }),

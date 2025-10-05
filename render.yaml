@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ecopoints-frontend
+    env: static
+    repo: https://github.com/maicol-monge/EcoPointsPasswordReset
+    branch: main
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE
+        value: https://ecopointsapi.onrender.com
+      - key: FRONTEND_BASE_URL
+        value: https://ecopoints-frontend.onrender.com

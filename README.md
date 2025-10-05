@@ -33,3 +33,6 @@ Despliegue en Render
 - Build command: npm run build
 - Start command: npm run preview (o usa la opción "Static Site" y sirve la carpeta "dist")
 - Asegúrate de configurar la variable de entorno FRONTEND_BASE_URL con la URL de Render para que el backend la use al enviar correos.
+- Para apuntar al backend externo (ej. https://ecopointsapi.onrender.com) configura la variable de entorno VITE_API_BASE en el servicio de Render.
+  - Ejemplo: VITE_API_BASE=https://ecopointsapi.onrender.com
+- FRONTEND_BASE_URL se usa por el backend para construir los enlaces en los correos; pon aquí la URL pública que Render asigne a este sitio.
