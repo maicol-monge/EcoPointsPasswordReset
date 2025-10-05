@@ -1,4 +1,5 @@
 import React from 'react'
+import logoUrl from './assets/logo_no_bg.png'
 
 import RequestReset from './pages/RequestReset'
 import ResetPassword from './pages/ResetPassword'
@@ -10,15 +11,20 @@ function App() {
   return (
     <div className="container">
       <header className="header">
-        <div style={{display:'flex',alignItems:'center',gap:12}}>
-          <img src="/src/assets/logo_no_bg.png" alt="EcoPoints" style={{height:40}} />
-          <h1>EcoPoints</h1>
+        <div className="logo-section">
+          <img src={logoUrl} alt="EcoPoints" className="logo" />
+          <div className="brand">
+            <h1>EcoPoints</h1>
+            <p className="subtitle">Restablecimiento de contraseña</p>
+          </div>
         </div>
       </header>
-      <main>
+      <main className="main-content">
         {!token ? <RequestReset /> : <ResetPassword token={token} />}
       </main>
-      <footer className="footer">© EcoPoints</footer>
+      <footer className="footer">
+        <p>© 2025 EcoPoints. Todos los derechos reservados.</p>
+      </footer>
     </div>
   )
 }

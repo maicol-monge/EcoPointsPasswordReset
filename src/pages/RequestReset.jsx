@@ -24,38 +24,71 @@ function RequestReset() {
   }
 
   return (
-    <section className="card">
-      <h2>Solicitar restablecimiento</h2>
-      <p>Ingresa el correo asociado y te enviaremos un enlace para restablecer tu contraseña.</p>
+    <section className="card request-card">
+      <div className="card-intro">
+        <h2>🔐 Solicitar restablecimiento</h2>
+        <p>Ingresa tu correo electrónico y te enviaremos un enlace seguro para restablecer tu contraseña.</p>
+      </div>
+      
       <form onSubmit={handleSubmit} className="form">
-        <label>
-          Tipo
-          <select value={tipo} onChange={e => setTipo(e.target.value)}>
-            <option value="usuario">Usuario</option>
-            <option value="tienda">Tienda</option>
-          </select>
-        </label>
+        <div className="input-group">
+          <label htmlFor="tipo">
+            Tipo de cuenta
+            <select id="tipo" value={tipo} onChange={e => setTipo(e.target.value)}>
+              <option value="usuario">👤 Usuario</option>
+              <option value="tienda">🏪 Tienda</option>
+            </select>
+          </label>
+        </div>
 
-        <label>
-          Correo
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="tu@correo.com"
-          />
-        </label>
+        <div className="input-group">
+          <label htmlFor="email">
+            Correo electrónico
+            <input
+              id="email"
+              type="email"
+              required
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="tu@correo.com"
+            />
+          </label>
+        </div>
 
-        <div className="row">
-          <button className="btn" type="submit" disabled={status === 'sending'}>
-            {status === 'sending' ? 'Enviando...' : 'Solicitar enlace'}
+        <div className="form-actions">
+          <button className="btn btn-primary" type="submit" disabled={status === 'sending'}>
+            {status === 'sending' ? (
+              <>
+                <div className="btn-spinner"></div>
+                Enviando...
+              </>
+            ) : (
+              <>
+                📧 Enviar enlace de restablecimiento
+              </>
+            )}
           </button>
         </div>
       </form>
 
-      {status === 'sent' && <p className="success">Si el correo existe, recibirás un enlace.</p>}
-      {status === 'error' && <p className="error">Ocurrió un error. Intenta nuevamente.</p>}
+      {status === 'sent' && (
+        <div className="alert alert-success">
+          <span>✅</span> 
+          <div>
+            <strong>Correo enviado</strong>
+            <p>Si el correo existe en nuestro sistema, recibirás un enlace de restablecimiento.</p>
+          </div>
+        </div>
+      )}
+      {status === 'error' && (
+        <div className="alert alert-error">
+          <span>❌</span>
+          <div>
+            <strong>Error de conexión</strong>
+            <p>No se pudo enviar el correo. Verifica tu conexión e intenta nuevamente.</p>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
