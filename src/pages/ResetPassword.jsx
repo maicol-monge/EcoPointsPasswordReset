@@ -137,7 +137,11 @@ function ResetPassword({ token }) {
           <h2>🔐 Nueva contraseña</h2>
           <div className="user-info">
             <span className="user-type">{tipo}</span>
-            {idRef && <span className="user-id">ID: {idRef}</span>}
+            {displayName ? (
+              <span className="user-id">{displayName}</span>
+            ) : (
+              idRef && <span className="user-id">ID: {idRef}</span>
+            )}
           </div>
         </div>
       </div>
