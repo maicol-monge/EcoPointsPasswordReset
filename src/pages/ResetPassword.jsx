@@ -5,6 +5,7 @@ function ResetPassword({ token }) {
   const [valid, setValid] = useState(null)
   const [tipo, setTipo] = useState(null)
   const [idRef, setIdRef] = useState(null)
+  const [displayName, setDisplayName] = useState(null)
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [status, setStatus] = useState(null)
@@ -22,11 +23,19 @@ function ResetPassword({ token }) {
         }
         const json = await r.json()
         if (json.success && json.data) {
-          setValid(true)
-          setTipo(json.data.tipo || null)
-          setIdRef(json.data.id_referencia || null)
-          console.log('Token validated successfully:', json.data)
-        } else {
+            setValid(true)
+            const tipoResp = json.data.tipo || null
+            const id = json.data.id_referencia || null
+            setTipo(tipoResp)
+            setIdRef(id)
+            console.log('Token validated successfully:', json.data)
+            // Try to fetch display name from profile endpoints
+            try {
+              await fetchProfile(id, tipoResp)
+            } catch (pfErr) {
+              console.error('Error fetching profile for displayName:', pfErr)
+            }
+          } else {
           console.error('Token validation failed:', json.message)
           setValid(false)
         }
@@ -37,6 +46,32 @@ function ResetPassword({ token }) {
     }
     validate()
   }, [token])
+
+  async function fetchProfile(id, tipo) {
+    if (!id || !tipo) return
+    try {
+      const path = tipo === 'usuario' ? `/api/usuarios/perfil/${id}` : `/api/tiendas/${id}`
+      const r = await fetch((apiBase || '') + path)
+      if (!r.ok) {
+        console.warn('Profile fetch returned non-ok:', r.status)
+        return
+      }
+      const pj = await r.json()
+      const data = pj.data || pj
+      if (!data) return
+      let name = null
+      if (tipo === 'usuario') {
+        // try common fields
+        name = [data.nombre, data.apellido].filter(Boolean).join(' ')
+        if (!name) name = data.nombre || data.full_name || data.correo || null
+      } else {
+        name = data.nombre || data.razon_social || data.nombre_tienda || null
+      }
+      if (name) setDisplayName(name)
+    } catch (err) {
+      console.error('Error fetching profile:', err)
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()
