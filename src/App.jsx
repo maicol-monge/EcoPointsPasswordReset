@@ -13,9 +13,9 @@ function App() {
     <div className="container">
       <header className="header">
         <div className="logo-section">
-          <img src={logoUrl} alt="EcoPoints" className="logo" />
+          <img src={logoUrl} alt="Waylo" className="logo" />
           <div className="brand">
-            <h1>EcoPoints</h1>
+            <h1>Waylo</h1>
             <p className="subtitle">Restablecimiento de contraseña</p>
           </div>
         </div>
@@ -24,7 +24,7 @@ function App() {
         {token ? <ResetPassword token={token} /> : <NoTokenPage />}
       </main>
       <footer className="footer">
-        <p>© 2025 EcoPoints. Todos los derechos reservados.</p>
+        <p>© 2025 Waylo. Todos los derechos reservados.</p>
       </footer>
     </div>
   )
